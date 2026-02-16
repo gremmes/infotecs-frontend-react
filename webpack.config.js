@@ -1,30 +1,47 @@
-const path = require('path');
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-module.exports = {
-  entry: './src/index.tsx',
+module.exports = (env, argv) => ({
+  entry: "./src/index.tsx",
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
+    path: path.resolve(__dirname, "dist"),
+    filename: "[name].[contenthash].js",
+    publicPath: "/",
+    clean: true,
+  },
+  resolve: {
+    extensions: [".tsx", ".ts", ".js"],
+    alias: {
+      "@": path.resolve(__dirname, "src"),
+    },
   },
   module: {
     rules: [
       {
-        test: /\.(ts|tsx)$/,
+        test: /\.tsx?$/,
+        use: "ts-loader",
         exclude: /node_modules/,
-        use: 'ts-loader',
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.(png|jpg|gif|svg)$/,
+        type: "asset/resource",
       },
     ],
   },
-  resolve: {
-    extensions: ['.js', '.jsx', '.ts', '.tsx'],
-  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "./public/index.html",
+    }),
+  ],
   devServer: {
-    contentBase: './dist',
+    port: 3000,
     hot: true,
+    historyApiFallback: true,
+    open: true,
   },
-  plugins: [],
-};
+  devtool: argv.mode === "production" ? "source-map" : "eval-source-map",
+});
