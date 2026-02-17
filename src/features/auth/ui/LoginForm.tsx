@@ -47,7 +47,7 @@ export const LoginForm: React.FC = () => {
             disabled={isLoading}
             block
             size="large"
-            style={{ backgroundColor: '#24618E' }}
+            style={{ backgroundColor: '#24618E', borderColor: '#24618E', color: '#fff' }}
           >
             Войти
           </Button>

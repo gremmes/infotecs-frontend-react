@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Modal, Form, Input } from "antd";
+import { Modal, Form, Input, Button } from "antd";
 import { useCreateUser } from "../model/use-create-user";
 
 interface CreateUserModalProps {
@@ -29,18 +29,33 @@ export const CreateUserModal: React.FC<CreateUserModalProps> = ({ open, onClose 
 
   return (
     <Modal
-      title="Создать пользователя"
+      title="Создание пользователя"
       open={open}
       onOk={handleOk}
       onCancel={onClose}
-      okText="Создать"
-      cancelText="Отмена"
       confirmLoading={isLoading}
-      okButtonProps={{ disabled: isLoading }}
-      cancelButtonProps={{ disabled: isLoading }}
       closable={!isLoading}
       maskClosable={!isLoading}
       bodyStyle={{ padding: '24px' }}
+      footer={[
+        <Button
+          key="cancel"
+          onClick={onClose}
+          disabled={isLoading}
+          style={{ backgroundColor: '#24618E', borderColor: '#24618E', color: '#fff' }}
+        >
+          Отмена
+        </Button>,
+        <Button
+          key="submit"
+          type="primary"
+          onClick={handleOk}
+          loading={isLoading}
+          style={{ backgroundColor: '#24618E', borderColor: '#24618E', color: '#fff' }}
+        >
+          Создать
+        </Button>,
+      ]}
     >
       <Form<CreateUserFormValues> form={form} layout="vertical" autoComplete="off">
         <Form.Item
@@ -48,18 +63,18 @@ export const CreateUserModal: React.FC<CreateUserModalProps> = ({ open, onClose 
           label="Имя"
           rules={[{ required: true, message: "Введите имя" }]}
         >
-          <Input placeholder="Введите имя" />
+          <Input />
         </Form.Item>
         <Form.Item
           name="avatar"
-          label="Аватар (URL)"
+          label="Ссылка на аватарку"
           rules={[
             { required: true, message: "Введите ссылку на аватар" },
             { type: "url", message: "Введите корректную ссылку" },
           ]}
           style={{ marginBottom: 16 }}
         >
-          <Input placeholder="https://example.com/avatar.png" />
+          <Input />
         </Form.Item>
       </Form>
     </Modal>
