@@ -1,6 +1,5 @@
 import React from "react";
 import { Form, Input, Button, Card, Typography } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { useLogin } from "../model/use-login";
 
 const { Title } = Typography;
@@ -19,7 +18,7 @@ export const LoginForm: React.FC = () => {
 
   return (
     <Card style={{ width: 400 }}>
-      <Title level={3} style={{ textAlign: "center", marginBottom: 24 }}>
+      <Title level={3} style={{ textAlign: "left", marginBottom: 24 }}>
         Авторизация
       </Title>
       <Form<LoginFormValues>
@@ -32,15 +31,15 @@ export const LoginForm: React.FC = () => {
           name="username"
           rules={[{ required: true, message: "Введите логин" }]}
         >
-          <Input prefix={<UserOutlined />} placeholder="Логин" size="large" />
+          <Input placeholder="Логин" size="large" />
         </Form.Item>
         <Form.Item
           name="password"
           rules={[{ required: true, message: "Введите пароль" }]}
         >
-          <Input.Password prefix={<LockOutlined />} placeholder="Пароль" size="large" />
+          <Input.Password placeholder="Пароль" size="large" />
         </Form.Item>
-        <Form.Item>
+        <Form.Item style={{ display: 'flex', justifyContent: "flex-end" }}>
           <Button
             type="primary"
             htmlType="submit"
@@ -48,6 +47,7 @@ export const LoginForm: React.FC = () => {
             disabled={isLoading}
             block
             size="large"
+            style={{ backgroundColor: '#24618E' }}
           >
             Войти
           </Button>
